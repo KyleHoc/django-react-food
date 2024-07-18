@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants"
 import "../styles/Form.css"
 import LoadingIndicator from "./LoadingIndicator"
+import "../App.css";
 
 //Create form for login/registration
 function Form({route, method}) {
@@ -56,7 +57,7 @@ function Form({route, method}) {
 
         {loading && <LoadingIndicator />}
 
-        <button className="form-button" type="submit">{name}</button>
+        <button className="form-button bg-primary" type="submit">{name}</button>
     </form>
 }
 

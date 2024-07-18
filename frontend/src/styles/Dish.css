@@ -31,3 +31,7 @@
   .delete-button:hover {
     background-color: #d32f2f; /* Darker red */
   }
+
+  .col-2{
+    padding-left: 2% !important;
+  }

@@ -11,14 +11,15 @@ class DishListCreate(generics.ListCreateAPIView):
     serializer_class = DishSerializer
     permission_class = [IsAuthenticated]
     
-    #Function for returning all dishes
-    #def get_all_dishes():
-        #return Dish.objects.all()
-    
     #Function for returning dishes created by the user
     def get_queryset(self):
         user = self.request.user
-        return Dish.objects.filter(author=user)
+        value = (self.kwargs['val'])
+        if value == "user":
+            return Dish.objects.filter(author=user)
+        else: 
+            return Dish.objects.all()
+
     
     #Function for creating dishes
     def perform_create(self, serializer):
