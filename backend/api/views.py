@@ -15,6 +15,7 @@ class DishListCreate(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         value = (self.kwargs['val'])
+        print(value)
         if value == "user":
             return Dish.objects.filter(author=user)
         else: 

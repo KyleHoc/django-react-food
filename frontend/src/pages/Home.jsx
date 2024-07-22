@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 function Home() {
+  //Variable declaration
   const [dishes, setDishes] = useState([]);
   const [title, setTitle] = useState("");
   const [course, setCourse] = useState("");
@@ -13,37 +14,23 @@ function Home() {
   const [photo, setPhoto] = useState("");
   const [details, setDetails] = useState("");
   const [author, setAuthor] = useState("");
+  const [value, setValue] = useState("user");
 
   const navigate = useNavigate();
 
-  const [value, setValue] = useState("user");
-  const [head, setHead] = useState("Your Recipes");
-  const [button, setButton] = useState("View All Recipes");
 
+  //Call getDishes by default
   useEffect(() => {
     getDishes();
-    setValue("all")
   }, []);
 
-  const switchDisplay = () => {
-    console.log("Display "+ value)
-    if (value == "user") {
-        setValue("all")
-        setHead("Your Recipes")
-        setButton("View All Recipes")
-        getDishes();
-    } else {
-        setValue("user")
-        setHead("All Recipes")
-        setButton("View Only Your Recipes")
-        getDishes();
-    }
-  }
 
+  //method for logging out
   const logout = () => {
     navigate("/logout");
   };
 
+  //Call the get API to retrieve the user's dishes
   const getDishes = () => {
     api
       .get(`/api/dishes/${value}/`)
@@ -54,6 +41,7 @@ function Home() {
       .catch((err) => alert(err));
   };
 
+  //Call the delete api to delete a dish, then call getDishes to change what is displayed
   const deleteDish = (id) => {
     api
       .delete(`/api/dishes/delete/${id}/`)
@@ -65,10 +53,10 @@ function Home() {
       .catch((error) => alert(error));
   };
 
+  //Call the create api, then call get Dishes to show the new dish
   const createDish = (e) => {
     e.preventDefault();
     e.target.reset();
-
     api
       .post(`/api/dishes/${value}/`, { course, title, prep, photo, details })
       .then((res) => {
@@ -79,6 +67,7 @@ function Home() {
       .catch((err) => alert(err));
   };
 
+  //Home page HTML
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-primary mb-3" data-bs-theme="dark">
@@ -163,14 +152,8 @@ function Home() {
         <input type="submit" className="bg-primary" value="Submit"></input>
       </form>
 
-      <div className="text-center mb-4">
-        <button onClick={switchDisplay} className="btn btn-primary my-2 my-sm-0" type="submit">
-            {button}
-        </button>
-      </div>
-
       <div>
-        <h2 className="text-primary font-weight-bold">{head}</h2>
+        <h2 className="text-primary font-weight-bold">Your Recipes</h2>
         {dishes.map((dish) => (
           <Dish dish={dish} onDelete={deleteDish} key={dish.id} />
         ))}
